@@ -1344,10 +1344,24 @@ CUPnPServer::ServeFile(NPT_HttpRequest&              request,
       response.GetHeaders().SetHeader("Content-Disposition", disp.c_str());
     }
 
-    return PLT_MediaConnect::ServeFile(request,
-                                       context,
-                                       response,
-                                       file_path);
+    NPT_Result result = PLT_MediaConnect::ServeFile(request,
+                                                    context,
+                                                    response,
+                                                    file_path);
+
+	NPT_HttpHeader* header = request.GetHeaders().GetHeader("getcontentFeatures.dlna.org");
+	if (header != NULL && header->GetValue() == "1") {
+		CLog::Log(LOGDEBUG, "Received request to return DLNA content features");
+
+		NPT_HttpHeaders& headers = response.GetHeaders();
+
+		headers.SetHeader("contentFeatures.dlna.org", "DLNA.ORG_PN=MPEG4_P2_MP4_SP_AAC;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000");
+		headers.SetHeader("TransferMode.DLNA.ORG", "Streaming");
+
+		PLT_HttpHelper::SetContentType(response, CUPnPServer::GetMimeType((const char*)file_path));
+	}
+
+	return result;
 }
 
 /*----------------------------------------------------------------------

@@ -35,9 +35,10 @@ NPT_HttpProxySelector::GetSystemDefault()
     return NULL;
 }
 #else
-NPT_HttpProxySelector*
-NPT_HttpProxySelector::GetSystemDefault()
-{
-    return NULL;
-}
+// Already defined in NptHttp.cpp#870
+//NPT_HttpProxySelector*
+//NPT_HttpProxySelector::GetSystemDefault()
+//{
+//    return NULL;
+//}
 #endif

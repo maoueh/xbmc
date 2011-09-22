@@ -2,7 +2,7 @@
 |
 |   Platinum - Service Action
 |
-| Copyright (c) 2004-2008, Plutinosoft, LLC.
+| Copyright (c) 2004-2010, Plutinosoft, LLC.
 | All rights reserved.
 | http://www.plutinosoft.com
 |
@@ -225,7 +225,7 @@ PLT_Action::SetArgumentValue(const char* name,
     for (NPT_Cardinal i=0;
          i<m_Arguments.GetItemCount();
          i++) {
-        NPT_Array<PLT_Argument*>::Iterator iter = m_Arguments.GetItem(i);
+        iter = m_Arguments.GetItem(i);
         if ((*iter)->GetPosition() > arg->GetPosition()) {
             return m_Arguments.Insert(iter, arg);
         }
@@ -345,9 +345,9 @@ PLT_Action::SetError(unsigned int code, const char* description)
 |   PLT_Action::GetError
 +---------------------------------------------------------------------*/
 const char* 
-PLT_Action::GetError(unsigned int& code) 
+PLT_Action::GetError(unsigned int* code /* = NULL */) 
 {
-    code = m_ErrorCode;
+    if (code) *code = m_ErrorCode;
     return m_ErrorDescription;
 }
 

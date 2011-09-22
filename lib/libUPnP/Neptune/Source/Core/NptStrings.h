@@ -64,7 +64,6 @@ public:
     NPT_String(const NPT_String& str);
     NPT_String(const char* str);
     NPT_String(const char* str, NPT_Size length);
-    NPT_String(const char* str, NPT_Ordinal first, NPT_Size length);
     NPT_String(char c, NPT_Cardinal repeat = 1);
     NPT_String() : m_Chars(NULL) {}
    ~NPT_String() { if (m_Chars) delete GetBuffer(); }
@@ -131,7 +130,7 @@ public:
     // editing
     void Insert(const char* s, NPT_Ordinal where = 0);
     void Erase(NPT_Ordinal start, NPT_Cardinal count = 1);
-    void Replace(NPT_Ordinal start, NPT_Cardinal count, const char* s);
+    void Replace(const char* before, const char* after, bool ignore_case = false);
     void TrimLeft();
     void TrimLeft(char c);
     void TrimLeft(const char* chars);

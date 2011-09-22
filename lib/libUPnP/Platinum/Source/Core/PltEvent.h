@@ -2,7 +2,7 @@
 |
 |   Platinum - Event
 |
-| Copyright (c) 2004-2008, Plutinosoft, LLC.
+| Copyright (c) 2004-2010, Plutinosoft, LLC.
 | All rights reserved.
 | http://www.plutinosoft.com
 |
@@ -31,6 +31,10 @@
 |
 ****************************************************************/
 
+/** @file
+ UPnP Eventing
+ */
+
 #ifndef _PLT_EVENT_H_
 #define _PLT_EVENT_H_
 
@@ -52,13 +56,17 @@ class PLT_CtrlPoint;
 /*----------------------------------------------------------------------
 |   PLT_EventSubscriber class
 +---------------------------------------------------------------------*/
+/**
+ The PLT_EventSubscriber class represents an event subscription for a given service
+ from a UPnP ControlPoint.
+ */
 class PLT_EventSubscriber
 {
 public:
     PLT_EventSubscriber(PLT_TaskManager* task_manager, 
                         PLT_Service*     service,
                         const char*      sid,
-                        int              timeout = -1);
+                        NPT_Timeout      timeout_secs = -1);
     ~PLT_EventSubscriber();
 
     PLT_Service*      GetService();
@@ -67,7 +75,7 @@ public:
     NPT_SocketAddress GetLocalIf();
     NPT_Result        SetLocalIf(NPT_SocketAddress value);
     NPT_TimeStamp     GetExpirationTime();
-    NPT_Result        SetTimeout(NPT_Cardinal timeout);
+    NPT_Result        SetTimeout(NPT_Timeout seconds = -1);
     const NPT_String& GetSID() const { return m_SID; }
     NPT_Result        FindCallbackURL(const char* callback_url);
     NPT_Result        AddCallbackURL(const char* callback_url);
@@ -88,6 +96,10 @@ protected:
 /*----------------------------------------------------------------------
 |   PLT_EventSubscriberFinderBySID
 +---------------------------------------------------------------------*/
+/**
+ The PLT_EventSubscriberFinderBySID class returns an instance of a PLT_EventSubscriber
+ given its subscriber ID.
+ */
 class PLT_EventSubscriberFinderBySID
 {
 public:
@@ -106,6 +118,10 @@ private:
 /*----------------------------------------------------------------------
 |   PLT_EventSubscriberFinderByCallbackURL
 +---------------------------------------------------------------------*/
+/**
+ The PLT_EventSubscriberFinderByCallbackURL class returns an instance of a 
+ PLT_EventSubscriber given its subscriber callback url.
+ */
 class PLT_EventSubscriberFinderByCallbackURL
 {
 public:
@@ -125,6 +141,10 @@ private:
 /*----------------------------------------------------------------------
 |   PLT_EventSubscriberFinderByService
 +---------------------------------------------------------------------*/
+/**
+ The PLT_EventSubscriberFinderByService class returns an instance of a 
+ PLT_EventSubscriber given a UPnP service.
+ */
 class PLT_EventSubscriberFinderByService
 {
 public:

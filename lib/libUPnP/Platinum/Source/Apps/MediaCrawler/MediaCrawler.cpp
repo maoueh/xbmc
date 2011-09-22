@@ -2,7 +2,7 @@
 |
 |   Platinum - Media Crawler
 |
-| Copyright (c) 2004-2008, Plutinosoft, LLC.
+| Copyright (c) 2004-2010, Plutinosoft, LLC.
 | All rights reserved.
 | http://www.plutinosoft.com
 |
@@ -53,7 +53,7 @@ CMediaCrawler::CMediaCrawler(PLT_CtrlPointReference& ctrlPoint,
                              const char*             udn /* = NULL */,
                              unsigned int            port /* = 0 */) :
     PLT_MediaBrowser(ctrlPoint, NULL),
-    PLT_MediaConnect("/", friendly_name, show_ip, udn, port)
+    PLT_MediaServer(friendly_name, show_ip, udn, port)
 {
 }
 
@@ -166,7 +166,7 @@ CMediaCrawler::OnBrowseRoot(PLT_ActionReference& action)
 
     /* extract browseFlag */
     BrowseFlags browseFlag;
-    if (NPT_FAILED(GetBrowseFlag(browseFlagValue, browseFlag))) {
+    if (NPT_FAILED(ParseBrowseFlag(browseFlagValue, browseFlag))) {
         /* error */
         NPT_LOG_WARNING("PLT_FileMediaServer::OnBrowseRoot - BrowseFlag value not allowed.");
         action->SetError(402,"Invalid BrowseFlag arg.");
@@ -494,7 +494,7 @@ CMediaCrawler::ProcessFileRequest(NPT_HttpRequest&              request,
     NPT_COMPILER_UNUSED(context);
 
     NPT_LOG_FINE("CMediaCrawler::ProcessFileRequest Received Request:");
-    PLT_LOG_HTTP_MESSAGE(NPT_LOG_LEVEL_FINE, &request);
+    PLT_LOG_HTTP_MESSAGE(NPT_LOG_LEVEL_FINER, &request);
 
     if (request.GetMethod().Compare("GET", true) && request.GetMethod().Compare("HEAD", true)) {
         response.SetStatus(500, "Internal Server Error");

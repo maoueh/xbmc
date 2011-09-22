@@ -105,8 +105,8 @@ static bool FindDeviceWait(CUPnP* upnp, const char* uuid, PLT_DeviceDataReferenc
         if (now > watchdog)
             return false;
 
-        // sleep a bit and try again
-        NPT_System::Sleep(NPT_TimeInterval(1, 0));
+        // sleep 1 sec and try again
+        NPT_System::Sleep(NPT_TimeInterval(1.0));
     }
 
     return !device.IsNull();

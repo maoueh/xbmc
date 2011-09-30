@@ -1456,7 +1456,7 @@ public:
 
   virtual NPT_Result OnAction(PLT_ActionReference& action, const PLT_HttpRequestContext& context)
   {
-    CLog::Log(LOGDEBUG, "UPnP: On Action \"%s\"", action->GetActionDesc().GetName());
+    CLog::Log(LOGDEBUG, "UPnP: On Action \"%s\"", (const char*)action->GetActionDesc().GetName());
 
     return PLT_MediaServer::OnAction(action, context);
   }
@@ -2301,7 +2301,7 @@ CUPnP::StartServer()
 
     // save port but don't overwrite saved settings if port was random
     if (NPT_SUCCEEDED(res)) {
-        CLog::Log(LOGDEBUG, "UPnP: Successfully added server \"%s\" to devices", m_ServerHolder->m_Device->GetFriendlyName());
+        CLog::Log(LOGDEBUG, "UPnP: Successfully added server \"%s\" to devices", (const char*)m_ServerHolder->m_Device->GetFriendlyName());
       
         if (g_settings.m_UPnPPortServer == 0) {
             g_settings.m_UPnPPortServer = m_ServerHolder->m_Device->GetPort();
